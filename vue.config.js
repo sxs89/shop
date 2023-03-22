@@ -1,6 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
+  lintOnSave: false,
   configureWebpack:{
     resolve:{
       alias:{
@@ -13,5 +14,6 @@ module.exports = defineConfig({
     }
   },
 
-  publicPath: './'   // 这是一个bug【传路由的时候会出错】
+  // publicPath: './'   // 这是一个bug【传路由的时候会出错】
+  publicPath: '/'   // 要把点去掉，不然路由传参的时候会报错！
 })

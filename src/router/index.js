@@ -4,12 +4,27 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {  // 首页
     path: '/',
-    name: 'home',
+    name: 'homes',
     component: () => import('../views/home/HomesView'),
     meta: {
       title: '图书兄弟'
     }
   },
+  {
+    path: '/category',
+    name: 'Category',
+    component: () => import('../views/category/CategoryView')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: ()=> import('../views/login/LoginView')
+  },
+  {
+    path: '/detail',
+    name: 'Detail',
+    component: ()=> import('../views/detail/DetailView')
+  }
 
 ]
 
