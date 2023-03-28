@@ -26,3 +26,11 @@ export function getHomeAllData(){
     })
 }
 
+// 根据类型获取商品，也需要第几页的数据
+export function getHomeGoods(type ='sales', page=1){
+    return request({
+        url: '/api/index?' + type + '=1&page=' + page,
+        // url:'/api/index',
+    })
+}
+
