@@ -8,7 +8,8 @@
     <div class="wrapper">
 
       <div class="my-swipe">
-        <img :src="img">   <!--第一层 轮播图-->
+<!--        <img :src="img">   &lt;!&ndash;第一层 轮播图&ndash;&gt;-->
+        <home-swipe :banners="banners"></home-swipe>
       </div>
       <div class="">
         <recommend-view :recommends="recommends"></recommend-view>     <!--第二层 热销产品-->
@@ -18,6 +19,8 @@
 
     </div>
 
+    <back-top @btop="btop"></back-top>
+
   </div>
 </template>
 
@@ -26,10 +29,13 @@ import NavBar from "@/components/common/navbar/NavBar";
 import RecommendView from "@/views/home/ChildComps/RecommendView";
 import TabControl from "@/components/content/tabControl/TabControl";
 import GoodsList from "@/components/content/goods/GoodsList";
+import BackTop from "@/components/common/backTop/BackTop";
+import HomeSwipe from "@/views/home/ChildComps/HomeSwipe";
+
 import BScroll from 'better-scroll';
 
 
-import {ref, reactive, onMounted, computed, watchEffect, nextTick} from 'vue';
+import {ref, reactive, toRefs, onMounted, computed, watchEffect, nextTick} from 'vue';
 import {getHomeAllData, getHomeGoods} from '@/network/home';
 
 export default {
@@ -38,6 +44,14 @@ export default {
     return {
       img: require('../../assets/images/ad1.png')
     }
+  },
+  components: {
+    RecommendView,
+    NavBar,
+    TabControl,
+    GoodsList,
+    BackTop,
+    HomeSwipe,
   },
   setup() {
 
@@ -60,11 +74,13 @@ export default {
     })
 
     let bscroll = reactive({})
+    let banners = ref([]);
 
     onMounted(()=>{
       getHomeAllData().then(res=>{
         // console.log(res);
         recommends.value = res.data.goods.data;
+        banners.value = res.data.slides;
       },err=>{
         console.log('getHomeAllData方法调用失败了！')
       })
@@ -88,6 +104,7 @@ export default {
         goods.new.list = res.data.goods.data
       })
 
+      // 下拉加载更多的组件
       bscroll = new BScroll(document.querySelector('.wrapper'), {
         probeType: 3,   //
         click: true,   // 是否允许点击
@@ -119,6 +136,7 @@ export default {
         bscroll.refresh()
       });
 
+
     })
 
 
@@ -138,20 +156,22 @@ export default {
       })
     })
 
+
+    const btop = ()=>{
+      bscroll.scrollTop(0, 0)
+    }
+
     return {
       recommends,
       tabClick,
       currentType,
       showGoods,
+      btop,
+      banners,
     }
 
   },
-  components: {
-    RecommendView,
-    NavBar,
-    TabControl,
-    GoodsList,
-  }
+
 }
 </script>
 

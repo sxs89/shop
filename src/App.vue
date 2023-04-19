@@ -4,6 +4,14 @@
   <hr>
 
   <nav id="nav">
+
+    <router-link class="tab-bar-item" to="/setUp">
+      <div class="icon">
+        <i class="iconfont icon-Home"></i>
+      </div>
+      <div>组合Api</div>
+    </router-link>
+
     <router-link class="tab-bar-item" to="/login">
       <div class="icon">
         <i class="iconfont icon-Home"></i>
@@ -26,9 +34,12 @@
     </router-link>
 
     <router-link class="tab-bar-item" to="/">
-      <div class="icon">
-        <i class="iconfont icon-cart"></i>
-      </div>
+      <van-badge :content="$store.state.cartCount" max="9">
+        <div class="icon">
+          <i class="iconfont icon-cart"></i>
+        </div>
+      </van-badge>
+
       <div>购物车</div>
     </router-link>
 
